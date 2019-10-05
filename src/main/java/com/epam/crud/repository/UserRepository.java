@@ -1,8 +1,8 @@
-package com.epam.crud.service;
+package com.epam.crud.repository;
 
 import com.epam.crud.model.User;
 
-public interface UserService {
+public interface UserRepository {
 
   int save(User user);
 
