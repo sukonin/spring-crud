@@ -1,5 +1,6 @@
 package com.epam.crud.repository;
 
+import com.epam.crud.mapper.UserRowMapper;
 import com.epam.crud.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -21,7 +22,8 @@ public class UserRepositoryImpl implements UserRepository {
 
   @Override
   public User findById(Long id) {
-    return null;
+    return jdbcTemplate
+        .queryForObject("select * from user where id = ?", new Object[]{id}, new UserRowMapper());
   }
 
   @Override
