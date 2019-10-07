@@ -17,10 +17,10 @@ public class MainWebAppInitializer extends
     WebMvcConfigurationSupport implements WebApplicationInitializer {
 
   @Override
-  public void onStartup(ServletContext servletContext) throws ServletException {
+  public void onStartup(ServletContext servletContext) {
     AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
 
-    context.scan("com.epam.crud");
+    context.register(ApplicationConfig.class);
     servletContext.addListener(new ContextLoaderListener(context));
 
     ServletRegistration.Dynamic appServlet = servletContext
