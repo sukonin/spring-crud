@@ -1,22 +1,37 @@
 package com.epam.crud.repository;
 
 import com.epam.crud.model.User;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
-  private final JdbcTemplate jdbcTemplate;
+  private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+  private final String INSERT_MESSAGE_SQL = "insert into user (username, password, role) values (:username,:password,:role)";
 
-  public UserRepositoryImpl(JdbcTemplate jdbcTemplate) {
-    this.jdbcTemplate = jdbcTemplate;
+
+  public UserRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
   }
 
   @Override
-  public int save(User user) {
-    return jdbcTemplate.update("insert into user (id, username, password) values (?,?,?)",
-        user.getId(), user.getUsername(), user.getPassword());
+  public User save(User user) {
+    KeyHolder holder = new GeneratedKeyHolder();
+
+    SqlParameterSource parameters = new MapSqlParameterSource()
+        .addValue("username", user.getUsername())
+        .addValue("password", user.getPassword())
+        .addValue("role", user.getRole());
+
+    namedParameterJdbcTemplate.update(INSERT_MESSAGE_SQL, parameters, holder);
+    user.setId(holder.getKey().longValue());
+
+    return user;
   }
 
   @Override

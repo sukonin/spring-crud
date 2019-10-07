@@ -21,7 +21,7 @@ public class UserController {
   }
 
   @PostMapping("/user")
-  public int createUser(User user) {
+  public User createUser(User user) {
     return userService.save(user);
   }
 }

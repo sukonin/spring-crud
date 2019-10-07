@@ -4,7 +4,7 @@ import com.epam.crud.model.User;
 
 public interface UserService {
 
-  int save(User user);
+  User save(User user);
 
   User findById(Long id);
 
