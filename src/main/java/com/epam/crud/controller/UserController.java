@@ -21,12 +21,12 @@ public class UserController {
     return "welcome";
   }
 
-  @PostMapping("/create")
-  public int createUser(User user) {
+  @PostMapping("/user")
+  public User createUser(User user) {
     return userService.save(user);
   }
 
-  @GetMapping("/find/{id}")
+  @GetMapping("/user/{id}")
   public User findUserByID(@PathVariable Long id) {
     return userService.findById(id);
   }

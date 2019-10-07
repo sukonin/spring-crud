@@ -2,28 +2,47 @@ package com.epam.crud.repository;
 
 import com.epam.crud.mapper.UserRowMapper;
 import com.epam.crud.model.User;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
-  private final JdbcTemplate jdbcTemplate;
+  private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-  public UserRepositoryImpl(JdbcTemplate jdbcTemplate) {
-    this.jdbcTemplate = jdbcTemplate;
+  private final String INSERT_USER_STATEMENT = "insert into user (username, password, role) values (:username,:password,:role)";
+  private final String SELECT_USER_BY_ID = "select * from user where id = :id";
+
+  public UserRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
   }
 
   @Override
-  public int save(User user) {
-    return jdbcTemplate.update("insert into user (id, username, password) values (?,?,?)",
-        user.getId(), user.getUsername(), user.getPassword());
+  public User save(User user) {
+    KeyHolder holder = new GeneratedKeyHolder();
+
+    SqlParameterSource parameters = new MapSqlParameterSource()
+        .addValue("username", user.getUsername())
+        .addValue("password", user.getPassword())
+        .addValue("role", user.getRole());
+
+    namedParameterJdbcTemplate.update(INSERT_USER_STATEMENT, parameters, holder);
+    user.setId(holder.getKey().longValue());
+
+    return user;
   }
 
   @Override
   public User findById(Long id) {
-    return jdbcTemplate
-        .queryForObject("select * from user where id = ?", new Object[]{id}, new UserRowMapper());
+    SqlParameterSource parameter = new MapSqlParameterSource()
+        .addValue("id", id);
+
+    return namedParameterJdbcTemplate
+        .queryForObject(SELECT_USER_BY_ID, parameter, new UserRowMapper());
   }
 
   @Override
