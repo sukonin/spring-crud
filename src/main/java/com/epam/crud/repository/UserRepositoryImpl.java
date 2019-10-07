@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 public class UserRepositoryImpl implements UserRepository {
 
   private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-  private final String INSERT_MESSAGE_SQL = "insert into user (username, password, role) values (:username,:password,:role)";
 
+  private final String INSERT_USER_STATEMENT = "insert into user (username, password, role) values (:username,:password,:role)";
 
   public UserRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
     this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
@@ -28,7 +28,7 @@ public class UserRepositoryImpl implements UserRepository {
         .addValue("password", user.getPassword())
         .addValue("role", user.getRole());
 
-    namedParameterJdbcTemplate.update(INSERT_MESSAGE_SQL, parameters, holder);
+    namedParameterJdbcTemplate.update(INSERT_USER_STATEMENT, parameters, holder);
     user.setId(holder.getKey().longValue());
 
     return user;
