@@ -5,13 +5,10 @@ import javax.servlet.ServletRegistration;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.context.support.GenericWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 /*ServletContainerInitializer*/
-public class MainWebAppInitializer extends
-    WebMvcConfigurationSupport implements WebApplicationInitializer {
+public class MainWebAppInitializer implements WebApplicationInitializer {
 
   @Override
   public void onStartup(ServletContext servletContext) {
@@ -21,7 +18,7 @@ public class MainWebAppInitializer extends
     servletContext.addListener(new ContextLoaderListener(context));
 
     ServletRegistration.Dynamic appServlet = servletContext
-        .addServlet("mvc", new DispatcherServlet(new GenericWebApplicationContext()));
+        .addServlet("mvc", new DispatcherServlet(context));
     appServlet.setLoadOnStartup(1);
     appServlet.addMapping("/");
   }

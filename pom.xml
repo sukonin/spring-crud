@@ -7,7 +7,6 @@
   <groupId>crud-example</groupId>
   <artifactId>crud-example</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <!--WAR-->
   <packaging>war</packaging>
 
   <dependencies>
