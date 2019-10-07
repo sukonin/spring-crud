@@ -26,11 +26,12 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User update(Long id, User user) {
-    return null;
+    user.setId(id);
+    return userRepository.update(user);
   }
 
   @Override
   public void deleteById(Long id) {
-
+    userRepository.deleteById(id);
   }
 }
