@@ -20,7 +20,7 @@ public class UserController {
     return "welcome";
   }
 
-  @PostMapping("/user/")
+  @PostMapping("/user")
   public User createUser(User user) {
     return userService.save(user);
   }
