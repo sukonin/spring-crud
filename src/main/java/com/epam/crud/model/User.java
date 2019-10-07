@@ -7,6 +7,15 @@ public class User implements Serializable {
   private Long id;
   private String username;
   private String password;
+  private String role;
+
+  public void setRole(String role) {
+    this.role = role;
+  }
+
+  public String getRole() {
+    return role;
+  }
 
   public void setId(Long id) {
     this.id = id;
