@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages = {"com.epam.crud.controller"})
+@ComponentScan(basePackageClasses = ApplicationConfig.class)
 public class WebConfig implements WebMvcConfigurer {
 
   @Override
