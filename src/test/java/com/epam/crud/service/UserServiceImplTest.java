@@ -28,14 +28,15 @@ public class UserServiceImplTest {
   @Test
   public void save() {
     User user = new User();
-    user.setId(1L);
     user.setUsername("username");
     user.setPassword("password");
 
-    Mockito.when(userMockRepo.save(user)).thenReturn(1);
+    Mockito.when(userMockRepo.save(user)).thenReturn(user);
 
-    int savedId = userService.save(user);
+    User saved = userService.save(user);
 
-    Assert.assertEquals(1L, savedId);
+    Assert.assertEquals("USER", saved.getRole());
+    Assert.assertEquals("username", saved.getUsername());
+    Assert.assertEquals("password", saved.getPassword());
   }
 }
