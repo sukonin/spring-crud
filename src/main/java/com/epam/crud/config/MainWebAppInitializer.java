@@ -13,8 +13,8 @@ public class MainWebAppInitializer implements WebApplicationInitializer {
   @Override
   public void onStartup(ServletContext servletContext) {
     AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-
     context.register(ApplicationConfig.class);
+
     servletContext.addListener(new ContextLoaderListener(context));
 
     ServletRegistration.Dynamic appServlet = servletContext
