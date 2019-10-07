@@ -9,7 +9,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public User save(User user) {
     System.out.println(user);
-    return null;
+    return user;
   }
 
   @Override
