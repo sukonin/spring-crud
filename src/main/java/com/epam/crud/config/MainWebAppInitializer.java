@@ -23,7 +23,7 @@ public class MainWebAppInitializer extends
     servletContext.addListener(new ContextLoaderListener(context));
 
     ServletRegistration.Dynamic appServlet = servletContext
-        .addServlet("mvc", new DispatcherServlet(new GenericWebApplicationContext()));
+        .addServlet("mvc", new DispatcherServlet(context));
     appServlet.setLoadOnStartup(1);
     appServlet.addMapping("/");
   }
